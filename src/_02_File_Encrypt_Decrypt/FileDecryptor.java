@@ -1,5 +1,8 @@
 package _02_File_Encrypt_Decrypt;
 
+import javax.swing.JOptionPane;
+
+
 public class FileDecryptor {
 	/*
 	 * Decryption is the process of taking encoded or encrypted text or other data
@@ -19,4 +22,14 @@ public class FileDecryptor {
 	 * Create a program that opens the file created by FileEncryptor and decrypts
 	 * the message, then display it to the user in a JOptionPane.
 	 */
+	
+	public static void main(String[] args) {
+		
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		
+		
+		
+		JOptionPane.showMessageDialog(null, "input the decrypted text here");
+		
+	}
 }
