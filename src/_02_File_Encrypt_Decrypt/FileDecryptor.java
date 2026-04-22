@@ -1,5 +1,9 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 
@@ -26,10 +30,42 @@ public class FileDecryptor {
 	public static void main(String[] args) {
 		
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		String encryptedText = "";
+		String decryptedText = "";
+		int key = 14;
 		
+		try {
+			FileReader fr = new FileReader("src/_02_File_Encrypt_Decrypt/message.txt");
+			int c = fr.read();
+			while(c != -1){
+				encryptedText = encryptedText + (char)c;
+				c = fr.read();
+			}
+			fr.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+		for (int i=0; i < encryptedText.length(); i++) {
+			if (encryptedText.charAt(i)!=' ') {
+				for (int e=0; e<alphabet.length(); e++) {
+					if (encryptedText.charAt(i) == alphabet.charAt(e)) {
+						if (e<key) {
+							decryptedText = decryptedText + alphabet.charAt(e-key+alphabet.length());
+						} else {
+							decryptedText = decryptedText + alphabet.charAt(e-key);	
+						}
+					}
+				}
+			} else {
+				decryptedText = decryptedText + ' ';
+			}
+
+		}
 		
-		JOptionPane.showMessageDialog(null, "input the decrypted text here");
+		JOptionPane.showMessageDialog(null, decryptedText);
 		
 	}
 }

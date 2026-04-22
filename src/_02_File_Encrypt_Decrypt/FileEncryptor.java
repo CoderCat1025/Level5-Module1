@@ -25,10 +25,34 @@ public class FileEncryptor {
 	 */
 
 	public static void main(String[] args) {
-		try {
-			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/message2.txt");
+		encryptor(14, "wow i sure hope this works abcdefghijklmnopqrstuvwxyz");
+	}
 
-			fw.write("Input the encrypted text here!!!");
+	public static void encryptor(int key, String message) {
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		String encryptedText = "";
+
+		for (int i=0; i < message.length(); i++) {
+			if (message.charAt(i)!=' ') {
+				for (int e=0; e<alphabet.length(); e++) {
+					if (message.charAt(i) == alphabet.charAt(e)) {
+						if (e+1>alphabet.length()-key) {
+							encryptedText = encryptedText + alphabet.charAt(e+key-alphabet.length());
+						} else {
+							encryptedText = encryptedText + alphabet.charAt(e+key);	
+						}
+					}
+				}
+			} else {
+				encryptedText = encryptedText + ' ';
+			}
+
+		}
+
+		try {
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/message.txt");
+
+			fw.write(encryptedText);
 
 			fw.close();
 		} catch (IOException e) {
