@@ -1,5 +1,12 @@
 package _03_To_Do_List;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,7 +33,7 @@ public class ToDoList {
 	 * 
 	 * When the program starts, it should automatically load the last saved file into the list. 
 	 */
-	
+
 	public static void main (String[] args) {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
@@ -35,32 +42,71 @@ public class ToDoList {
 		JButton remove = new JButton();
 		JButton save = new JButton();
 		JButton load = new JButton();
-		
-frame.add(panel);
-panel.add(add);
-panel.add(view);
-panel.add(remove);
-panel.add(save);
-panel.add(load);
-frame.setTitle("ToDoList");
-frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ArrayList<String> tasks = new ArrayList<>();
 
-add.addActionListener((e) -> {
-	
-});
-view.addActionListener((e) -> {
-	
-});
-remove.addActionListener((e) -> {
-	
-});
-save.addActionListener((e) -> {
-	
-});
-load.addActionListener((e) -> {
-	
-});
+		frame.setVisible(true);
+		frame.add(panel);
 
-frame.pack();
-	}
-}
+		add.setText("Add Task");
+		view.setText("View Tasks");
+		remove.setText("Remove Task");
+		save.setText("Save as List");
+		load.setText("Load List");
+
+		panel.add(add);
+		panel.add(view);
+		panel.add(remove);
+		panel.add(save);
+		panel.add(load);
+		frame.setTitle("ToDoList");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+
+		add.addActionListener((e) -> {
+			String tas = JOptionPane.showInputDialog(null, "What task would you like to add?");
+			tasks.add(tas);
+		});
+		view.addActionListener((e) -> {
+			JOptionPane.showMessageDialog(null, tasks.toString());
+		});
+		remove.addActionListener((e) -> {
+			String r = JOptionPane.showInputDialog(null, "Enter the number of the task you want to remove.");
+			tasks.remove(Integer.parseInt(r));
+		});
+		save.addActionListener((e) -> {
+			try {
+				FileWriter fw = new FileWriter("src/_03_To_Do_List/todolist.txt");
+				fw.write(tasks.toString());
+				fw.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
+		load.addActionListener((e) -> {
+			String file = JOptionPane.showInputDialog(null, "Enter the name of the file you want to load.");
+
+			try {
+				BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/" + file));
+
+				String line = br.readLine();
+				
+				for (int i = 0; i < tasks.size(); i++) {
+					tasks.remove(0);
+				}
+				
+				while(line != null){
+					
+					tasks.add(line);
+					//fix this
+					line = br.readLine();
+				}
+
+				br.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+
+		});
+	}}
