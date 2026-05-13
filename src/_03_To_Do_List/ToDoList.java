@@ -67,6 +67,30 @@ public class ToDoList {
 			tasks.add(tas);
 		});
 		view.addActionListener((e) -> {
+			if (tasks.isEmpty()) {
+
+				try {
+					BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/todolist.txt"));
+
+					String line = br.readLine();
+
+					while(line != null){
+						if (line.isEmpty()) {
+						} else {
+							tasks.add(line);
+						}
+
+						line = br.readLine();
+					}
+
+					br.close();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+
+			}
 			JOptionPane.showMessageDialog(null, tasks.toString());
 		});
 		remove.addActionListener((e) -> {
@@ -76,7 +100,14 @@ public class ToDoList {
 		save.addActionListener((e) -> {
 			try {
 				FileWriter fw = new FileWriter("src/_03_To_Do_List/todolist.txt");
-				fw.write(tasks.toString());
+
+				String file = "";
+
+				for (int i = 0; i < tasks.size(); i++) {
+					file = file + "\n" + tasks.get(i);
+				}
+
+				fw.write(file);
 				fw.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -85,19 +116,19 @@ public class ToDoList {
 		load.addActionListener((e) -> {
 			String file = JOptionPane.showInputDialog(null, "Enter the name of the file you want to load.");
 
+			tasks.clear();
+
 			try {
 				BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/" + file));
 
 				String line = br.readLine();
-				
-				for (int i = 0; i < tasks.size(); i++) {
-					tasks.remove(0);
-				}
-				
+
 				while(line != null){
-					
-					tasks.add(line);
-					//fix this
+					if (line.isEmpty()) {
+					} else {
+						tasks.add(line);
+					}
+
 					line = br.readLine();
 				}
 
