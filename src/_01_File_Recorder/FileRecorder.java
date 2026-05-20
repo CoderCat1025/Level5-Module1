@@ -20,3 +20,5 @@ public class FileRecorder {
 		}
 	}
 }
+
+ //Copyright © 2026 Sora Ogawa

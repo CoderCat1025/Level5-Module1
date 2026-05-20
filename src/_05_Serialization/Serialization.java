@@ -65,3 +65,5 @@ public class Serialization {
 		}
 	}
 }
+
+ //Copyright © 2026 Sora Ogawa

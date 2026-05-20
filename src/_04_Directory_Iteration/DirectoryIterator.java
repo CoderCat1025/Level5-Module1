@@ -12,28 +12,18 @@ public class DirectoryIterator {
 		 * The following is an example of how to list all of the files in a directory.
 		 * Once the program is running, the directory is chosen using the JFileChooser.
 		 */
-		JFileChooser jfc = new JFileChooser("src");
+		JFileChooser jfc = new JFileChooser("Level5-Module1");
 		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		int returnVal = jfc.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File directory = jfc.getSelectedFile();
 			File[] files = directory.listFiles();
 			if(files != null) {
-				for(File f : files) {
-					if (f.getAbsolutePath().contains(".java")) {
-						try {
-							FileWriter fw = new FileWriter(f, true);
-							fw.write("\n Copyright © 2026 Sora Ogawa");
-							fw.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
-
-					}
-				}
+			iterator(files);
 			}
 		}
+		
+		
 
 
 
@@ -44,4 +34,28 @@ public class DirectoryIterator {
 		 * (e.g //Copyright © 2019 FirstName LastName)
 		 */
 	}
+	
+	public static void iterator(File[] files) {
+		for(File f : files) {
+			if (f.isDirectory() == true) {
+				iterator(f.listFiles());
+			} else {
+			if (f.getAbsolutePath().contains(".java")) {
+				try {
+					FileWriter fw = new FileWriter(f, true);
+					fw.write("\n //Copyright © 2026 Sora Ogawa");
+
+					fw.flush();
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+
+			}
+			}
+		}
+	}
 }
+
+ //Copyright © 2026 Sora Ogawa
